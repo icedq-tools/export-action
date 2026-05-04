@@ -1,0 +1,112 @@
+name: 'iceDQ Export'
+description: 'Export iceDQ rules, workflows, or folders to a bundle file'
+author: 'iceDQ Integration Team'
+branding:
+  icon: 'download-cloud'
+  color: 'blue'
+
+inputs:
+  icedq-url:
+    description: 'iceDQ instance base URL'
+    required: true
+  keycloak-url:
+    description: 'Keycloak token endpoint base'
+    required: true
+  client-id:
+    description: 'OAuth client ID'
+    required: true
+  client-secret:
+    description: 'OAuth client secret'
+    required: true
+  org-id:
+    description: 'iceDQ Org ID'
+    required: true
+  account-id:
+    description: 'iceDQ Account ID'
+    required: true
+  workspace-id:
+    description: 'Source workspace ID'
+    required: true
+  resource:
+    description: 'Resource kind: rule, workflow, or folder'
+    required: true
+  id:
+    description: 'Resource UUID'
+    required: true
+  include-child:
+    description: 'Recurse folder children (folder resource only)'
+    required: false
+    default: 'false'
+  output-file:
+    description: 'Path to write the bundle ZIP'
+    required: true
+  timeout:
+    description: 'Polling timeout in seconds'
+    required: false
+    default: '1800'
+  cli-version:
+    description: 'Pin a specific @icedq/cli version (default: latest)'
+    required: false
+    default: 'latest'
+  verify-ssl:
+    description: 'Verify TLS (default true)'
+    required: false
+    default: 'true'
+  upload-artifact:
+    description: 'Upload the bundle as a workflow artifact'
+    required: false
+    default: 'true'
+  artifact-name:
+    description: 'Name of the uploaded artifact'
+    required: false
+    default: 'icedq-bundle'
+
+outputs:
+  task-id:
+    description: 'iceDQ taskInstanceId of the export'
+    value: ${{ steps.run-export.outputs.task-id }}
+  status:
+    description: 'Terminal status (Completed | Terminated | Error)'
+    value: ${{ steps.run-export.outputs.status }}
+  bundle-path:
+    description: 'Path to the downloaded bundle ZIP'
+    value: ${{ steps.run-export.outputs.bundle-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install @icedq/cli
+      shell: bash
+      run: npm install -g "@icedq/cli@${{ inputs.cli-version }}"
+
+    - name: Run icedq export
+      id: run-export
+      shell: bash
+      env:
+        ICEDQ_URL: ${{ inputs.icedq-url }}
+        ICEDQ_KEYCLOAK_URL: ${{ inputs.keycloak-url }}
+        ICEDQ_CLIENT_ID: ${{ inputs.client-id }}
+        ICEDQ_CLIENT_SECRET: ${{ inputs.client-secret }}
+        ICEDQ_ORG_ID: ${{ inputs.org-id }}
+        ICEDQ_ACCOUNT_ID: ${{ inputs.account-id }}
+        ICEDQ_WORKSPACE_ID: ${{ inputs.workspace-id }}
+        ICEDQ_VERIFY_SSL: ${{ inputs.verify-ssl }}
+        RESOURCE: ${{ inputs.resource }}
+        RESOURCE_ID: ${{ inputs.id }}
+        INCLUDE_CHILD: ${{ inputs.include-child }}
+        OUTPUT_FILE: ${{ inputs.output-file }}
+        TIMEOUT: ${{ inputs.timeout }}
+      run: bash "${{ github.action_path }}/scripts/run-export.sh"
+
+    - name: Upload bundle artifact
+      if: ${{ inputs.upload-artifact == 'true' && steps.run-export.outputs.status == 'Completed' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.output-file }}
+        if-no-files-found: error
