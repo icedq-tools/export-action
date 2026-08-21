@@ -94,6 +94,14 @@ jobs:
 | `status` | Terminal status (`Completed`, `Terminated`, `Error`) |
 | `bundle-path` | Path to the downloaded bundle ZIP |
 
+## Versioning
+
+- `@v1` — recommended. Tracks the latest `v1.x.y` release; you automatically get bug fixes and non-breaking improvements.
+- `@v1.0.0` — pins to an exact release. No automatic updates; upgrade by changing this yourself.
+- `@<commit-sha>` — pins to an exact commit. Most reproducible/secure option.
+
+Breaking changes are released under a new major tag (`@v2`, etc.) — existing `@v1` users are never moved onto breaking changes automatically.
+
 ## Self-hosted runners
 
 For iceDQ instances on private networks, set `runs-on: [self-hosted, icedq]` (or your runner's labels). The Action is runner-agnostic.
