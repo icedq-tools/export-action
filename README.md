@@ -2,7 +2,7 @@
 
 GitHub composite Action that exports iceDQ rules, workflows, or folders to a bundle file by invoking [`@icedq/cli`](https://www.npmjs.com/package/@icedq/cli).
 
-Pairs with [`icedq-tools/import-action`](https://github.com/icedq-tools/import-action) for promotion pipelines.
+Pairs with [`icedq-tools/generate-mapping-action`](https://github.com/marketplace/actions/icedq-generate-mapping) and [`icedq-tools/import-action`](https://github.com/marketplace/actions/icedq-import) for promotion pipelines.
 
 ## Usage
 
@@ -106,7 +106,8 @@ Breaking changes are released under a new major tag (`@v2`, etc.) — existing `
 
 For iceDQ instances on private networks, set `runs-on: [self-hosted, icedq]` (or your runner's labels). The Action is runner-agnostic.
 
-## Companion repos
+## Related tools
 
-- [`icedq-tools/cli`](https://github.com/icedq-tools/cli) — the CLI this Action wraps
-- [`icedq-tools/import-action`](https://github.com/icedq-tools/import-action) — companion import Action
+- [`icedq-tools/cli`](https://www.npmjs.com/package/@icedq/cli) — the CLI this Action wraps
+- [`icedq-tools/generate-mapping-action`](https://github.com/marketplace/actions/icedq-generate-mapping) — generates the mapping file this Action consumes
+- [`icedq-tools/import-action`](https://github.com/marketplace/actions/icedq-import) — companion import Action
