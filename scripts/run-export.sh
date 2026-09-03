@@ -5,9 +5,9 @@ ARGS=(
   "export"
   "--resource" "${RESOURCE}"
   "--id" "${RESOURCE_ID}"
-  "--output-file" "${OUTPUT_FILE}"
+  "--output" "${OUTPUT_FILE}"
   "--timeout" "${TIMEOUT}"
-  "--output" "json"
+  "--output-format" "json"
 )
 
 if [[ "${INCLUDE_CHILD:-false}" == "true" ]]; then
