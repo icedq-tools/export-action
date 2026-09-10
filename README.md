@@ -19,7 +19,7 @@ Pairs with [`icedq-tools/generate-mapping-action`](https://github.com/marketplac
     client-secret: ${{ secrets.ICEDQ_CLIENT_SECRET }}
     org-id:        ${{ vars.ICEDQ_ORG_ID }}
     account-id:    ${{ vars.ICEDQ_ACCOUNT_ID }}
-    workspace-id:  ${{ vars.DEV_WORKSPACE_ID }}
+    workspace-id:  ${{ vars.ICEDQ_WORKSPACE_ID }}
     resource:      workflow
     id:            wkfl-abc123
     output-file:   ./exports/finance.zip
