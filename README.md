@@ -13,13 +13,13 @@ Pairs with [`icedq-tools/generate-mapping-action`](https://github.com/marketplac
 
 - uses: icedq-tools/export-action@v1
   with:
-    icedq-url:     ${{ secrets.ICEDQ_URL }}
-    keycloak-url:  ${{ secrets.ICEDQ_KEYCLOAK_URL }}
+    icedq-url:     ${{ vars.ICEDQ_URL }}
+    keycloak-url:  ${{ vars.ICEDQ_KEYCLOAK_URL }}
     client-id:     ${{ secrets.ICEDQ_CLIENT_ID }}
     client-secret: ${{ secrets.ICEDQ_CLIENT_SECRET }}
-    org-id:        ${{ secrets.ICEDQ_ORG_ID }}
-    account-id:    ${{ secrets.ICEDQ_ACCOUNT_ID }}
-    workspace-id:  ${{ vars.DEV_WORKSPACE_ID }}
+    org-id:        ${{ vars.ICEDQ_ORG_ID }}
+    account-id:    ${{ vars.ICEDQ_ACCOUNT_ID }}
+    workspace-id:  ${{ vars.ICEDQ_WORKSPACE_ID }}
     resource:      workflow
     id:            wkfl-abc123
     output-file:   ./exports/finance.zip
