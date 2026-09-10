@@ -109,5 +109,4 @@ For iceDQ instances on private networks, set `runs-on: [self-hosted, icedq]` (or
 ## Related tools
 
 - [`icedq-tools/cli`](https://www.npmjs.com/package/@icedq/cli) — the CLI this Action wraps
-- [`icedq-tools/generate-mapping-action`](https://github.com/marketplace/actions/icedq-generate-mapping) — generates the mapping file this Action consumes
 - [`icedq-tools/import-action`](https://github.com/marketplace/actions/icedq-import) — companion import Action
